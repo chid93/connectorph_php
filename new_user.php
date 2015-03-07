@@ -13,6 +13,20 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
 
     $name = $_POST['name'];
     $password = $_POST['password'];
+
+    /**
+     * Encrypting password
+     * returns salt and encrypted password
+     */
+    $salt = sha1(rand());
+    $salt = substr($salt, 0, 10);
+    $encrypted = base64_encode(sha1($password . $salt, true) . $salt);
+    $hash = array("salt" => $salt, "encrypted" => $encrypted);
+    $encrypted_password = $hash["encrypted"]; // encrypted password
+    $salt = $hash["salt"]; // salt
+    echo json_encode($salt);
+    echo json_encode($encrypted_password);
+
     $address1 = $_POST['address1'];
 	$address2 = $_POST['address2'];
     $email = $_POST['email'];
@@ -27,7 +41,7 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     $db = new DB_CONNECT();
 
     // mysql inserting a new row
-    $result = mysql_query("INSERT INTO users( name, email, password, phoneno, address1, address2, state, city ) VALUES( '$name', '$email', '$password','$phoneNumber', '$address1','$address2','$state','$city')");
+    $result = mysql_query("INSERT INTO users( name, email, encrypted_password, salt, phoneno, address1, address2, state, city ) VALUES( '$name', '$email', '$encrypted_password' , '$salt', '$phoneNumber', '$address1','$address2','$state','$city')");
 
     // check if row inserted or not
     if ($result) {
@@ -53,4 +67,5 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     // echoing JSON response
     echo json_encode($response);
 }
+
 ?>
