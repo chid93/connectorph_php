@@ -40,6 +40,11 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     // connecting to db
     $db = new DB_CONNECT();
 
+    if($state == "[State]")
+        $state = null;
+    if($city =="[City]")
+        $city = null;
+
     // mysql inserting a new row
     $result = mysql_query("INSERT INTO users( name, email, encrypted_password, salt, phoneno, address1, address2, state, city ) VALUES( '$name', '$email', '$encrypted_password' , '$salt', '$phoneNumber', '$address1','$address2','$state','$city')");
 

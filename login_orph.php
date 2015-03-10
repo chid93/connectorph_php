@@ -42,7 +42,7 @@ if (!(empty($_POST['email']) || empty($_POST['password']))) {
         }
         else{
             $response["success"] = 0;
-            $response["message"] = "Incorrect Username/Password";
+            $response["message"] = "Incorrect Email/Password";
             // echoing JSON response
             echo json_encode($response);
         }
@@ -50,7 +50,7 @@ if (!(empty($_POST['email']) || empty($_POST['password']))) {
     } else {
         // user not found
         $response["success"] = 0;
-        $response["message"] = "Incorrect Username/Password";
+        $response["message"] = "Incorrect Email/Password";
         // echoing JSON response
         echo json_encode($response);
     }
