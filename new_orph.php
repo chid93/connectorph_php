@@ -9,7 +9,7 @@
 $response = array();
 
 // check for required fields
-if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['phoneNumber'])  || empty($_POST['address1']) || empty($_POST['address2']) || empty($_POST['state']) || empty($_POST['city']))) {
+if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['phoneNumber'])  || empty($_POST['address1']) || empty($_POST['state']) || empty($_POST['city']))) {
 
     $name = $_POST['name'];
     $password = $_POST['password'];
