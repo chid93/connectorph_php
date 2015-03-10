@@ -40,10 +40,16 @@ if (!(empty($_POST['email']) || empty($_POST['password']))) {
             // echoing JSON response
             echo json_encode($response);
         }
+        else{
+            $response["success"] = 0;
+            $response["message"] = "Incorrect Username/Password";
+            // echoing JSON response
+            echo json_encode($response);
+        }
     } else {
         // user not found
         $response["success"] = 0;
-        $response["message"] = "Oops! An error occurred.";
+        $response["message"] = "Incorrect Username/Password.";
         // echoing JSON response
         echo json_encode($response);
     }
