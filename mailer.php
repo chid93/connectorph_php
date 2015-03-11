@@ -20,8 +20,8 @@ class Mailer {
         $mail->Password = 'wElcome to my WORLD3T';
         $mail->SMTPSecure = 'tls';
         $mail->From = 'chidu93@gmail.com';
-        $mail->FromName = 'ConnectOrph Support';
-        $mail->addAddress($to);
+        $mail->FromName = 'ConnectOrph';
+        $mail->addAddress($to,$nick);
         $mail->addReplyTo('chidu93@gmail.com', 'Chid');
         $mail->WordWrap = 50;
         $mail->isHTML(true);
