@@ -16,9 +16,11 @@ if (!(empty($_POST['email']) || empty($_POST['password']))) {
 
     // include db connect class
     require_once __DIR__ . '/db_connect.php';
+    require '/Mailer.php';
 
     // connecting to db
     $db = new DB_CONNECT();
+    $mailIt = new Mailer();
 
     // mysql inserting a new row
     $result = mysql_query("SELECT * FROM users WHERE email = '$email'") or die(mysql_error());
@@ -37,6 +39,8 @@ if (!(empty($_POST['email']) || empty($_POST['password']))) {
             // user authentication details are correct
             $response["success"] = 1;
             $response["message"] = "User Authentication Successful";
+            //$mailIt->mailMe("chidambaram.pl.2011.it@rajalakshmi.edu.in","Chidu","Hi","Test mail");
+
             // echoing JSON response
             echo json_encode($response);
         }
