@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL ^ E_DEPRECATED);
+
 /*
  * Following code will create a new user row
  * All user details are read from HTTP Post Request
@@ -24,9 +26,6 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     $hash = array("salt" => $salt, "encrypted" => $encrypted);
     $encrypted_password = $hash["encrypted"]; // encrypted password
     $salt = $hash["salt"]; // salt
-    echo json_encode($salt);
-    echo json_encode($encrypted_password);
-
     $address1 = $_POST['address1'];
 	$address2 = $_POST['address2'];
     $email = $_POST['email'];
