@@ -45,7 +45,7 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     $db = new DB_CONNECT();
 
     //Check if User already exists
-    $emailCheck = mysql_query("SELECT email from users WHERE email = '$email'");
+    $emailCheck = mysql_query("SELECT email from orphanages WHERE email = '$email'");
     $no_of_rows = mysql_num_rows($emailCheck);
     if ($no_of_rows > 0) {
         // failed to insert row
