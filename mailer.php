@@ -51,5 +51,12 @@ class Mailer {
         return implode('', $temp_array);
     }
 
+    public function random_code()
+    {
+        return rand(pow(10, 4 - 1) - 1, pow(10, 4) - 1);
+    }
+
+
+
 }
 ?>
