@@ -44,7 +44,7 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     if($city =="[City]")
         $city = null;
 
-    //Check if User already exists
+    //Check if User already exists in users table
     $emailCheck = mysql_query("SELECT email from users WHERE email = '$email'");
     $no_of_rows = mysql_num_rows($emailCheck);
     if ($no_of_rows > 0) {
@@ -56,6 +56,20 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
         echo json_encode($response);
         exit;
     }
+
+    //Check if User already exists in orphanage table
+    $emailCheck = mysql_query("SELECT email from orphanages WHERE email = '$email'");
+    $no_of_rows = mysql_num_rows($emailCheck);
+    if ($no_of_rows > 0) {
+        // failed to insert row
+        $response["success"] = 0;
+        $response["message"] = "Someone already has that username";
+
+        // echoing JSON response
+        echo json_encode($response);
+        exit;
+    }
+
 
     // mysql inserting a new row
     $result = mysql_query("INSERT INTO users( name, email, encrypted_password, salt, phoneno, address1, address2, state, city ) VALUES( '$name', '$email', '$encrypted_password' , '$salt', '$phoneNumber', '$address1','$address2','$state','$city')");
