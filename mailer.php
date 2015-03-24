@@ -1,4 +1,8 @@
 <?php
+
+// array for JSON response
+$response = array();
+
 class Mailer {
 
     // constructor
@@ -28,12 +32,11 @@ class Mailer {
         $mail->Subject = $subject;
         $mail->Body    = $body;
         if(!$mail->send()) {
-           echo 'Message could not be sent.'."\r\n";
-           echo 'Mailer Error: ' . $mail->ErrorInfo;
-           echo "\r\n";
-           exit;
+           $response["message"] = "Message could not be sent.";
+           return $response;
         }
-        echo 'Message has been sent'."\r\n";
+        $response["message"] = "Message has been sent";
+        return $response;
     }
 
     public function random_string()
