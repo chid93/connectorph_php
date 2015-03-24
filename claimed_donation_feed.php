@@ -36,7 +36,6 @@ if (!(empty($_POST['email']))) {
             $timeClaim = $row["claimed_at"];
             $timestampClaim = strtotime( $timeClaim );
             $donation["claimed_at"] = $timestampClaim;
-
             $donation["claim_code"] = $row["claim_code"];
             $donation["category"] = $row["category"];
             $donation["subCategory"] = $row["subCategory"];
@@ -47,6 +46,13 @@ if (!(empty($_POST['email']))) {
             $donation["caddress2"] = $row["caddress2"];
             $donation["cstate"] = $row["cstate"];
             $donation["ccity"] = $row["ccity"];
+
+            $uid = $row["uid"];
+            $fetchDonorName = mysql_query("SELECT name FROM users WHERE uid = $uid") or die(mysql_error());
+            $fetchDonorName = mysql_fetch_array($fetchDonorName);
+
+            $donation["donorName"] = $fetchDonorName["name"];
+
 
             // push single product into final response array
             array_push($response["claimedDonations"], $donation);
