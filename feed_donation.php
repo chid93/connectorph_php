@@ -2,11 +2,6 @@
 
 error_reporting(E_ALL ^ E_DEPRECATED);
 
-/*
- * Following code will create a new user row
- * All user details are read from HTTP Post Request
- */
-
 // array for JSON response
 $response = array();
 // include db connect class
