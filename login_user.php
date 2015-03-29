@@ -14,6 +14,7 @@ $response = array();
 if (!(empty($_POST['email']) || empty($_POST['tag']))) {
 
     $tag = $_POST['tag'];
+    $databaseOnFocus = $_POST['databaseOnFocus'];
     // include db connect class
     require_once __DIR__ . '/db_connect.php';
     require '/Mailer.php';
@@ -27,10 +28,8 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
 
         $password = $_POST['password'];
         $email = $_POST['email'];
-
         // mysql retrieve record from email
         $result = mysql_query("SELECT * FROM users WHERE email = '$email'") or die(mysql_error());
-
         // check for result
         $no_of_rows = mysql_num_rows($result);
         if ($no_of_rows > 0) {
@@ -39,13 +38,11 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
             $encrypted_password = $result['encrypted_password'];
             //Decrypting password
             $hash = base64_encode(sha1($password . $salt, true) . $salt);
-
             // check for password equality
             if ($encrypted_password == $hash) {
                 // user authentication details are correct
                 $response["success"] = 1;
                 $response["message"] = "User Authentication Successful";
-
                 // echoing JSON response
                 echo json_encode($response);
                 exit;
@@ -72,7 +69,7 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
     if ($tag == 'forgotPassword') {
 
         $email = $_POST['email'];
-        $result = mysql_query("SELECT * FROM users WHERE email = '$email'") or die(mysql_error());
+        $result = mysql_query("SELECT * FROM $databaseOnFocus WHERE email = '$email'") or die(mysql_error());
 
         // check for result
         $no_of_rows = mysql_num_rows($result);
@@ -82,7 +79,7 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
             $subject="Reset your password";
             $randomCode=$mailIt->random_string();
 
-            $updatePassResult = mysql_query("UPDATE `users` SET `verificationCode` = '$randomCode' WHERE `email` = '$email'");
+            $updatePassResult = mysql_query("UPDATE $databaseOnFocus SET `verificationCode` = '$randomCode' WHERE `email` = '$email'");
 
             $user_name=$user["name"];
             $body=nl2br("Hi $user_name,\r\n\r\nYou requested to reset the password for your ConnectOrph account with the e-mail address ($email). Kindly use the code below to reset your password!\r\n\r\n$randomCode \r\n\r\nThanks, The ConnectOrph Team\r\n ");
@@ -108,7 +105,7 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
     if ($tag == 'verificationCode') {
         $email = $_POST['email'];
         $vCode = $_POST['vCode'];
-        $result = mysql_query("SELECT * FROM users WHERE email = '$email'") or die(mysql_error());
+        $result = mysql_query("SELECT * FROM $databaseOnFocus WHERE email = '$email'") or die(mysql_error());
         $user=mysql_fetch_array($result);
         $user_verificationCode = $user["verificationCode"];
         if($vCode == $user_verificationCode){
@@ -129,8 +126,6 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
             echo json_encode($response);
             exit;
         }
-
-
     }
     if ($tag == 'resetPassword') {
         $email = $_POST['email'];
@@ -146,9 +141,9 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"]; // salt
 
-        $result = mysql_query("UPDATE `users` SET `encrypted_password` = '$encrypted_password', `salt` = '$salt', `verificationCode` = '' WHERE `email` = '$email'");
+        $result = mysql_query("UPDATE $databaseOnFocus SET `encrypted_password` = '$encrypted_password', `salt` = '$salt', `verificationCode` = '' WHERE `email` = '$email'");
         if($result){
-            //Succesfully updated table
+            //Successfully updated table
             $response["success"] = 1;
             $response["error"] = 0;
             $response["message"] = "Password has been successfully changed";
@@ -165,12 +160,7 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
             echo json_encode($response);
             exit;
         }
-
-
     }
-
-
-
     // password is missing
     $response["success"] = 0;
     $response["error"] = 1;
@@ -178,9 +168,6 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
     // echoing JSON response
     echo json_encode($response);
     exit;
-
-
-
 } else {
 // required field is missing
 $response["success"] = 0;
