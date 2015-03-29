@@ -50,7 +50,7 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     if ($no_of_rows > 0) {
         // failed to insert row
         $response["success"] = 0;
-        $response["message"] = "Someone already has that username";
+        $response["message"] = "There is already an user registered with that email";
 
         // echoing JSON response
         echo json_encode($response);
@@ -63,7 +63,7 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     if ($no_of_rows > 0) {
         // failed to insert row
         $response["success"] = 0;
-        $response["message"] = "Someone already has that username";
+        $response["message"] = "There is already an user registered with that email";
 
         // echoing JSON response
         echo json_encode($response);

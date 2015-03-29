@@ -98,7 +98,7 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
             // user not found
             $response["success"] = 0;
             $response["error"] = 1;
-            $response["message"] = "This Username is not yet registered";
+            $response["message"] = "There is no user registered with that email address";
             // echoing JSON response
             echo json_encode($response);
             exit;
