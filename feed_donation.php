@@ -9,7 +9,7 @@ require_once __DIR__ . '/db_connect.php';
 // connecting to db
 $db = new DB_CONNECT();
 
-$result = mysql_query("SELECT *FROM donations ORDER BY created_at DESC") or die(mysql_error());
+$result = mysql_query("SELECT *FROM donations WHERE claimed = 0 ORDER BY created_at DESC") or die(mysql_error());
 
 // check for empty result
 if (mysql_num_rows($result) > 0) {
