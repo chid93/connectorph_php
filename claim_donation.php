@@ -54,21 +54,40 @@ if (!(empty($_POST['email']) )) {
     }
 
     //Get phonenumber from the donationid
-    $result_getPNO = mysql_query("SELECT phoneNumber, created_at FROM donations WHERE donationid = $donationid") or die(mysql_error());
+    $result_getPNO = mysql_query("SELECT phoneNumber, created_at, uid FROM donations WHERE donationid = $donationid") or die(mysql_error());
     $result_getPNO = mysql_fetch_array($result_getPNO);
     $phoneNumberDonor = $result_getPNO["phoneNumber"];
     $created_at = $result_getPNO["created_at"];
+    $uid = $result_getPNO["uid"];
 
     // check if row inserted or not
     if ($result_getPNO) {
         // successfully inserted into database
         $response["phoneNumber"] = $phoneNumberDonor;
-
-        $body="Claim Code: $claim_code.\nYour donation which was created at $created_at was claimed by the following Orphanage.\nOrphanage Name: $orphanageName\nPhone Number: $phoneNumber";
-        $response["body"] = $body;
-
-        // echoing JSON response
-        echo json_encode($response);
+        $result = mysql_query("SELECT * FROM users WHERE uid = '$uid'") or die(mysql_error());
+        // check for result
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            // user found
+            $user=mysql_fetch_array($result);
+            $user_name=$user["name"];
+            $emailDonor=$user["email"];
+            $body="Claim Code: $claim_code.\nYour donation which was created at $created_at was claimed by the following Orphanage.\nOrphanage Name: $orphanageName\nPhone Number: $phoneNumber";
+            $bodyForMail=nl2br("Claim Code: $claim_code.\r\n\r\nYour donation which was created at $created_at was claimed by the following Orphanage.\r\n\r\nOrphanage Name: $orphanageName\r\n\r\nPhone Number: $phoneNumber");
+            $response["body"] = $body;
+            $subject="Claim Code";
+            $response["mailIt"]=$mailIt->mailMe("chidambaram.pl.2011.it@rajalakshmi.edu.in",$user_name,$subject,$bodyForMail);
+            // echoing JSON response
+            echo json_encode($response);
+        } else {
+            // user not found
+            $response["success"] = 0;
+            $response["error"] = 1;
+            $response["message"] = "There is no user registered with that email address";
+            // echoing JSON response
+            echo json_encode($response);
+            exit;
+        }
     } else {
         // failed to insert row
         $response["success"] = 0;
