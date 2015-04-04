@@ -95,7 +95,7 @@ if (!(empty($_POST['email']))) {
         // no products found
         $response["success"] = 0;
         if($tag == "MyClaimedDonations")
-            $response["message"] = "You have not claimed any donations yet!";
+            $response["message"] = "You have no claimed any donations!";
         else
             $response["message"] = "You have not received any donations yet!";
 
