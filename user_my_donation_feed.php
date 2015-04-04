@@ -28,28 +28,36 @@ if (!(empty($_POST['email']))) {
     if($tag == "MyClaimedDonations"){
         $result = mysql_query("SELECT *FROM donations WHERE uid = $uid AND claimed = 1 ORDER BY claimed_at DESC") or die(mysql_error());
     }
-    else
+    else if($tag == "MyUnclaimedDonations")
         $result = mysql_query("SELECT *FROM donations WHERE uid = $uid AND claimed = 0 ORDER BY created_at DESC") or die(mysql_error());
+    else
+        $result = mysql_query("SELECT *FROM donations WHERE uid = $uid AND claimed = 1 AND delivered = 1 ORDER BY created_at DESC") or die(mysql_error());
 
     // check for empty result
     if (mysql_num_rows($result) > 0) {
         // looping through all results
         // products node
-        $response["claimedDonations"] = array();
+        $response["SelectedDonationsFeed"] = array();
         while ($row = mysql_fetch_array($result)) {
             // temp user array
             $donation = array();
             $donation["donationid"] = $row["donationid"];
             $time = $row["created_at"];
-            $donation["created_at"] = $time;
+            $timestamp = strtotime($time);
+            $donation["created_at"] = $timestamp;
             $donation["category"] = $row["category"];
             $donation["subCategory"] = $row["subCategory"];
             $donation["description"] = $row["description"];
             $donation["numberOfItems"] = $row["numberOfItems"];
-            if($tag == "MyClaimedDonations"){
+            if($tag != "MyUnclaimedDonations"){
                 $timeClaim = $row["claimed_at"];
                 $timestampClaim = strtotime( $timeClaim );
                 $donation["claimed_at"] = $timestampClaim;
+
+                $timeDelivered = $row["delivered_at"];
+                $timestampDelivered = strtotime( $timeDelivered );
+                $donation["delivered_at"] = $timestampDelivered;
+
                 $donation["claim_code"] = $row["claim_code"];
                 $oid = $row["oid"];
                 $donation["oid"] = $oid;
@@ -70,7 +78,7 @@ if (!(empty($_POST['email']))) {
             $donation["ccity"] = $row["ccity"];
             }
             // push single product into final response array
-            array_push($response["claimedDonations"], $donation);
+            array_push($response["SelectedDonationsFeed"], $donation);
         }
         // success
         $response["success"] = 1;
@@ -81,8 +89,10 @@ if (!(empty($_POST['email']))) {
         $response["success"] = 0;
         if($tag == "MyClaimedDonations")
             $response["message"] = "You have no claimed donations yet!";
-        else
+        else if($tag == "MyUnclaimedDonations")
             $response["message"] = "You have not made any donations yet!";
+        else
+            $response["message"] = "You have no delivered donations yet!";
         // echo no users JSON
         echo json_encode($response);
     }
