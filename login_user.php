@@ -15,13 +15,15 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
 
     $tag = $_POST['tag'];
     $databaseOnFocus = $_POST['databaseOnFocus'];
-    // include db connect class
-    require_once __DIR__ . '/db_connect.php';
-    require '/Mailer.php';
+
+    // importing files
+    require_once './db_Connect.php';
+    require './mailer.php';
 
     // connecting to db
     $db = new DB_CONNECT();
     $mailIt = new Mailer();
+
     $response = array("tag" => $tag, "success" => 0, "error" => 0);
 
     if ($tag == 'login' && !empty($_POST['password'])) {
@@ -83,7 +85,7 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
 
             $user_name=$user["name"];
             $body=nl2br("Hi $user_name,\r\n\r\nYou requested to reset the password for your ConnectOrph account with the e-mail address ($email). Kindly use the code below to reset your password!\r\n\r\n$randomCode \r\n\r\nThanks, The ConnectOrph Team\r\n ");
-            //$response["mailIt"]=$mailIt->mailMe("chidambaram.pl.2011.it@rajalakshmi.edu.in",$user_name,$subject,$body);
+            $response["mailIt"]=$mailIt->mailMe("chidambaram.pl.2011.it@rajalakshmi.edu.in",$user_name,$subject,$body);
             $response["success"] = 1;
             $response["error"] = 0;
             $response["message"] = "Mail instructions to reset password sent";
@@ -169,6 +171,7 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
     echo json_encode($response);
     exit;
 } else {
+
 // required field is missing
 $response["success"] = 0;
 $response["error"] = 1;
@@ -182,3 +185,4 @@ else if($_POST['tag'] == 'forgotPassword')
 echo json_encode($response);
 }
 ?>
+	

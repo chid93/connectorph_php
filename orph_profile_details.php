@@ -7,8 +7,8 @@ $response = array();
 
 if (!(empty($_POST['email']))) {
 
-        // include db connect class
-    require_once __DIR__ . '/db_connect.php';
+    // include db connect class
+    require_once './db_Connect.php';
     // connecting to db
     $db = new DB_CONNECT();
     $email = $_POST['email'];

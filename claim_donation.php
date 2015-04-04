@@ -17,7 +17,7 @@ if (!(empty($_POST['email']) )) {
     $donationid = $_POST['donationid'];
 
     // include db connect class
-    require_once __DIR__ . '/db_connect.php';
+    require_once './db_Connect.php';
     require '/Mailer.php';
 
     // connecting to db

@@ -26,7 +26,7 @@ if (!(empty($_POST['itemCount']) || empty($_POST['desc']) || empty($_POST['email
 
 
     // include db connect class
-    require_once __DIR__ . '/db_connect.php';
+    require_once './db_Connect.php';
 
     // connecting to db
     $db = new DB_CONNECT();
