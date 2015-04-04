@@ -25,13 +25,12 @@ if (!(empty($_POST['email']))) {
     $result = mysql_fetch_array($result);
     $uid = $result["uid"];
 
-    if($tag == "MyClaimedDonations"){
+    if($tag == "MyClaimedDonations")
         $result = mysql_query("SELECT *FROM donations WHERE uid = $uid AND claimed = 1 ORDER BY claimed_at DESC") or die(mysql_error());
-    }
     else if($tag == "MyUnclaimedDonations")
         $result = mysql_query("SELECT *FROM donations WHERE uid = $uid AND claimed = 0 ORDER BY created_at DESC") or die(mysql_error());
     else
-        $result = mysql_query("SELECT *FROM donations WHERE uid = $uid AND claimed = 1 AND delivered = 1 ORDER BY created_at DESC") or die(mysql_error());
+        $result = mysql_query("SELECT *FROM donations WHERE uid = $uid AND claimed = 1 AND delivered = 1 ORDER BY delivered_at DESC") or die(mysql_error());
 
     // check for empty result
     if (mysql_num_rows($result) > 0) {
