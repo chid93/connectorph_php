@@ -36,13 +36,14 @@ if (!(empty($_POST['itemCount']) || empty($_POST['desc']) || empty($_POST['email
     $result = mysql_fetch_array($result);
     $phoneNumber = $result["phoneno"];
     $uid = $result["uid"];
-    $claimed = 0;
+    $claimed = 0;    
+    $currentTime = (new \DateTime())->format('Y-m-d H:i:s');
 
 
     // mysql inserting a new row
     $result = mysql_query("INSERT INTO donations( uid, claimed, category, subCategory, numberOfItems, description,
-        phoneNumber, caddress1, caddress2, cstate, ccity ) VALUES( '$uid', '$claimed', '$categories' , '$subCategories', '$itemCount',
-        '$desc', '$phoneNumber', '$address1','$address2','$state','$city')");
+        phoneNumber, caddress1, caddress2, cstate, ccity, created_at ) VALUES( '$uid', '$claimed', '$categories' , '$subCategories', '$itemCount',
+        '$desc', '$phoneNumber', '$address1','$address2','$state','$city','$currentTime')");
 
     // check if row inserted or not
     if ($result) {

@@ -18,7 +18,7 @@ if (!(empty($_POST['email']) )) {
 
     // include db connect class
     require_once './db_Connect.php';
-    require '/Mailer.php';
+    require './mailer.php';
 
     // connecting to db
     $db = new DB_CONNECT();
@@ -32,10 +32,10 @@ if (!(empty($_POST['email']) )) {
     $phoneNumber = $result_getOid["phoneno"];
     $claimed = 1;
     $claim_code = $mailIt->random_code();
-
+    $currentTime = (new \DateTime())->format('Y-m-d H:i:s');
 
     // mysql updating a row
-    $result_update_donation = mysql_query("UPDATE `donations` SET `claimed` = '$claimed', `claimed_at` = CURRENT_TIMESTAMP, `claim_code` = '$claim_code',
+    $result_update_donation = mysql_query("UPDATE `donations` SET `claimed` = '$claimed', `claimed_at` = '$currentTime', `claim_code` = '$claim_code',
                         `oid` = '$oid' WHERE `donationid` = '$donationid'");
 
     // check if row inserted or not

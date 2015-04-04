@@ -24,9 +24,9 @@ if (!(empty($_POST['categories']) || empty($_POST['desc']) || empty($_POST['emai
     $result = mysql_query("SELECT oid from orphanages WHERE email = '$email'");
     $result = mysql_fetch_array($result);
     $oid = $result["oid"];
-
+    $currentTime = (new \DateTime())->format('Y-m-d H:i:s');
     // mysql inserting a new row
-    $result = mysql_query("INSERT INTO needs( oid, category, description) VALUES('$oid', '$categories', '$desc')");
+    $result = mysql_query("INSERT INTO needs( oid, category, description, created_at) VALUES('$oid', '$categories', '$desc', '$currentTime')");
 
     // check if row inserted or not
     if ($result) {
