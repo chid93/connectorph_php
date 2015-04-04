@@ -87,11 +87,11 @@ if (!(empty($_POST['email']))) {
         // no products found
         $response["success"] = 0;
         if($tag == "MyClaimedDonations")
-            $response["message"] = "You have no claimed donations yet!";
+            $response["message"] = "You have no claimed donations!";
         else if($tag == "MyUnclaimedDonations")
-            $response["message"] = "You have not made any donations yet!";
+            $response["message"] = "You have no unclaimed donations!";
         else
-            $response["message"] = "You have no delivered donations yet!";
+            $response["message"] = "You have no delivered donations!";
         // echo no users JSON
         echo json_encode($response);
     }
