@@ -16,7 +16,9 @@ if (!(empty($_POST['itemCount']) || empty($_POST['desc']) || empty($_POST['email
     $desc = $_POST['desc'];
     $itemCount= $_POST['itemCount'];
     $categories= $_POST['categories'];
+    $categories = str_replace("'","''",$categories);
     $subCategories= $_POST['subCategories'];
+    $subCategories = str_replace("'","''",$subCategories);
     $address1 = $_POST['address1'];
 	$address2 = $_POST['address2'];
     $email = $_POST['email'];
@@ -36,7 +38,7 @@ if (!(empty($_POST['itemCount']) || empty($_POST['desc']) || empty($_POST['email
     $result = mysql_fetch_array($result);
     $phoneNumber = $result["phoneno"];
     $uid = $result["uid"];
-    $claimed = 0;    
+    $claimed = 0;
     $currentTime = (new \DateTime())->format('Y-m-d H:i:s');
 
 
