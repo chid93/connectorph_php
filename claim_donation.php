@@ -76,7 +76,7 @@ if (!(empty($_POST['email']) )) {
             $bodyForMail=nl2br("Claim Code: $claim_code.\r\n\r\nYour donation which was created at $created_at was claimed by the following Orphanage.\r\n\r\nOrphanage Name: $orphanageName\r\n\r\nPhone Number: $phoneNumber");
             $response["body"] = $body;
             $subject="Claim Code";
-            $response["mailIt"]=$mailIt->mailMe("chidambaram.pl.2011.it@rajalakshmi.edu.in",$user_name,$subject,$bodyForMail);
+            $response["mailIt"]=$mailIt->mailMe($emailDonor,$user_name,$subject,$bodyForMail);
             // echoing JSON response
             echo json_encode($response);
         } else {
