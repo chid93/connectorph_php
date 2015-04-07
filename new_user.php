@@ -33,6 +33,10 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
 	$city = $_POST['city'];
 	$phoneNumber =$_POST['phoneNumber'];
 
+    $name = str_replace("'","''",$name);
+    $address1 = str_replace("'","''",$address1);
+    $address2 = str_replace("'","''",$address2);
+
     // include db connect class
     require_once './db_Connect.php';
 

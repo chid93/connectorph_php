@@ -41,9 +41,7 @@ if (!(empty($_POST['email']))) {
             // temp user array
             $donation = array();
             $donation["donationid"] = $row["donationid"];
-            $time = $row["created_at"];
-            $timestamp = strtotime($time);
-            $donation["created_at"] = $timestamp;
+            $donation["created_at"] = $row["created_at"];
             $donation["category"] = $row["category"];
             $donation["subCategory"] = $row["subCategory"];
             $donation["description"] = $row["description"];

@@ -51,6 +51,12 @@ if (!(empty($_POST['donationid']))) {
             $city = $_POST['city'];
             $phoneNumber = $_POST['phoneNumber'];
 
+            $desc = str_replace("'","''",$desc);
+            $categories = str_replace("'","''",$categories);
+            $subCategories = str_replace("'","''",$subCategories);
+            $address1 = str_replace("'","''",$address1);
+            $address2 = str_replace("'","''",$address2);
+
             $result = mysql_query("UPDATE donations SET category =
                 '$categories', subCategory = '$subCategories', numberOfItems =
                 '$itemCount', description = '$desc', phoneNumber =

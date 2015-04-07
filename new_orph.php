@@ -26,7 +26,6 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     $hash = array("salt" => $salt, "encrypted" => $encrypted);
     $encrypted_password = $hash["encrypted"]; // encrypted password
     $salt = $hash["salt"]; // salt
-
     $address1 = $_POST['address1'];
 	$address2 = $_POST['address2'];
     $email = $_POST['email'];
@@ -36,7 +35,10 @@ if (!(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'
     $website = $_POST['website'];
     $mission = $_POST['mission'];
 
-
+    $name = str_replace("'","''",$name);
+    $address1 = str_replace("'","''",$address1);
+    $address2 = str_replace("'","''",$address2);
+    $mission = str_replace("'","''",$mission);
 
     // include db connect class
     require_once './db_Connect.php';

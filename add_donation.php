@@ -16,16 +16,18 @@ if (!(empty($_POST['itemCount']) || empty($_POST['desc']) || empty($_POST['email
     $desc = $_POST['desc'];
     $itemCount= $_POST['itemCount'];
     $categories= $_POST['categories'];
-    $categories = str_replace("'","''",$categories);
     $subCategories= $_POST['subCategories'];
-    $subCategories = str_replace("'","''",$subCategories);
     $address1 = $_POST['address1'];
 	$address2 = $_POST['address2'];
     $email = $_POST['email'];
 	$state = $_POST['state'];
 	$city = $_POST['city'];
 
-
+    $desc = str_replace("'","''",$desc);
+    $categories = str_replace("'","''",$categories);
+    $subCategories = str_replace("'","''",$subCategories);
+    $address1 = str_replace("'","''",$address1);
+    $address2 = str_replace("'","''",$address2);
 
     // include db connect class
     require_once './db_Connect.php';

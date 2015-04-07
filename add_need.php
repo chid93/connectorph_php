@@ -12,7 +12,8 @@ if (!(empty($_POST['categories']) || empty($_POST['desc']) || empty($_POST['emai
     $categories= $_POST['categories'];
     $email = $_POST['email'];
 
-
+    $desc = str_replace("'","''",$desc);
+    $categories = str_replace("'","''",$categories);
 
     // include db connect class
     require_once './db_Connect.php';
