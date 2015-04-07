@@ -85,7 +85,7 @@ if (!(empty($_POST['email']) || empty($_POST['tag']))) {
 
             $user_name=$user["name"];
             $body=nl2br("Hi $user_name,\r\n\r\nYou requested to reset the password for your ConnectOrph account with the e-mail address ($email). Kindly use the code below to reset your password!\r\n\r\n$randomCode \r\n\r\nThanks, The ConnectOrph Team\r\n ");
-            $response["mailIt"]=$mailIt->mailMe("chidambaram.pl.2011.it@rajalakshmi.edu.in",$user_name,$subject,$body);
+            $response["mailIt"]=$mailIt->mailMe($email,$user_name,$subject,$body);
             $response["success"] = 1;
             $response["error"] = 0;
             $response["message"] = "Mail instructions to reset password sent";
@@ -185,4 +185,3 @@ else if($_POST['tag'] == 'forgotPassword')
 echo json_encode($response);
 }
 ?>
-	
